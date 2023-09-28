@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "famiglie-pari-o-dispari",
+    "slug": "famiglie-pari-o-dispari",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "famiglie-pari-o-dispari"
+}
