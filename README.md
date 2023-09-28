@@ -1,2 +1,2 @@
-# famiglie-ausl-manager
-Interfaccia delle famiglie per la richiesta di approvazione dei menu e visualizzazione.
+# Famiglie (Pari o Dispari)
+Interfaccia delle famiglie per la richiesta di modifica dei menu.
