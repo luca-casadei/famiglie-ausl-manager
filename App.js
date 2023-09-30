@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
-import Home from "./Home";
-import Login from "./Login";
+import { View, Text ,StyleSheet,SafeAreaView} from "react-native";
+import Home from "./components/Home";
+import Login from "./components/Login";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -9,13 +9,10 @@ const Stack = createNativeStackNavigator();
 const App=()=> {
   return (
     <>
-    <View>
-      <Login></Login>
-    </View>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-        name="Login"
+        name="Pagina di Login"
         component={Login}>
         </Stack.Screen>
         <Stack.Screen
@@ -28,4 +25,8 @@ const App=()=> {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  ///Aggiungi qui stili
+});
 export default App;
