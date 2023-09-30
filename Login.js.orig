@@ -1,0 +1,25 @@
+<<<<<<< HEAD
+import {Button} from 'react-native'
+
+
+const Login =({navigation}) => {
+    return(
+    <Button title='Prova Login'
+     onPress={()=>{navigation.navigate('Home', {name: 'prova'})}}>
+    </Button>
+    );
+}
+=======
+const Login = ({navigation}) => {
+    return (
+      <Button
+        title="Passa alla home"
+        onPress={() =>
+          navigation.navigate('Home', {name: 'Prova'})
+        }
+      />
+    );
+};
+>>>>>>> dab91bf97cef21456e0aa469cdf1a12d43259ada
+
+export default Login;
