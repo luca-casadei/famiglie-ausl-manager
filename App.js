@@ -17,8 +17,7 @@ const App=()=> {
         </Stack.Screen>
         <Stack.Screen
         name="Home"
-        component={Home}
-        options={{prova:"prova"}}>
+        component={Home}>
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

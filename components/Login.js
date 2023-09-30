@@ -7,9 +7,7 @@ const Login =({navigation,email,password}) => {
         <View style={styles.areaView}>
             <Image 
             style={styles.image}
-            source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-            }}></Image>
+            source={require('../images/Logo.png')}></Image>
             <Text style={styles.text}>Inserisci la e-mail</Text>
             <TextInput
                 style={styles.input}
@@ -38,8 +36,8 @@ const VerificaCredenziali=(navigation,email,password)=>{
 
 const styles = StyleSheet.create({
     image: {
-        width: 66,
-        height: 58,
+        width: 150,
+        height: 150,
     },
     areaView:{
         flex:0.8,
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         borderRadius: 10,
         elevation: 3,
-        backgroundColor: 'black',
+        backgroundColor: 'gray',
     }
 });
 
