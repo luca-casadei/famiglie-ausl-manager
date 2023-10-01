@@ -1,20 +1,23 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Home from '../components/Home';
 import ProfiloFamiglia from '../components/ProfiloFamiglia';
+import Login from '../components/Login';
 
 //Screen names
 const homeName = "Home";
-const profiloName = "Profilo";
+const profileName = "Profilo";
+const logoutName = "Logout"
 
 const Tab = createBottomTabNavigator();
 
 //Componente per la gestione della TabBar
-function HomeContainer() {
+const HomeContainer = ({navigation}) =>{
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -27,9 +30,12 @@ function HomeContainer() {
             if (rn === homeName) {
               iconName = focused ? 'home' : 'home-outline';
 
-            } else if (rn === profiloName) {
+            } else if (rn === profileName) {
               iconName = focused ? 'person' : 'person-outline';
             } 
+            else if(rn === logoutName){
+              iconName = focused ? 'log-out' : 'log-out-outline'
+            }
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -41,7 +47,22 @@ function HomeContainer() {
         >
 
         <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={profiloName} component={ProfiloFamiglia} />
+        <Tab.Screen name={profileName} component={ProfiloFamiglia} />
+        <Tab.Screen name={logoutName} component={Login} listeners={{
+              tabPress: e => {
+                e.preventDefault()
+                Alert.alert('Attenzione', 'L\'account verrà disconnesso!', [
+                  {
+                    text: 'Annulla',
+                    onPress: () => console.log('Logout annullato'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK', onPress: () => {console.log('Logout effettuato'); navigation.navigate('Login');}
+                  },
+                ]);
+              }
+            }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );

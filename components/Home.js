@@ -1,7 +1,7 @@
 import {Text,FlatList,View, StyleSheet, Pressable} from 'react-native'
 
 //Pagina in cui mostrare i bambini associati all'utente he ha effettuato l'accesso 
-const Home =({navigation}) => {
+const Home =() => {
     return(
         <View style={styles.container}>
             <FlatList

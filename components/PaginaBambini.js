@@ -1,7 +1,7 @@
 import {Text,TextInput,View, StyleSheet,Pressable,Image} from 'react-native'
 
 
-const PaginaBambini =({navigation}) => {
+const PaginaBambini =() => {
     return(
         <View style={styles.areaView}>
             <Text style={styles.text}>Pagina Bambini</Text>

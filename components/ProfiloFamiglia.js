@@ -2,7 +2,7 @@
 import {Text,TextInput,View, StyleSheet,Pressable,Image} from 'react-native'
 
 //Pagina in cui mostrare i bambini associati all'utente he ha effettuato l'accesso 
-const ProfiloFamiglia =({navigation}) => {
+const ProfiloFamiglia =() => {
     return(
         <View style={styles.areaView}>
             <Text style={styles.text}>Pagina Profilo della famiglia</Text>
