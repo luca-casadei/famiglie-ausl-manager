@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import {Text,TextInput,View, StyleSheet,Pressable,Image} from 'react-native'
 
 
@@ -28,9 +27,11 @@ const Login =({navigation,email,password}) => {
         </View>
     );
 } 
+
+//Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
 const VerificaCredenziali=(navigation,email,password)=>{
-    if(email == "ciao" && password == "pippo"){
-        navigation.navigate('Home', {nomeFamiglia: 'Casadei'});
+    if(email == "Ciao" && password == "Pippo"){
+        navigation.navigate('HomeContainer', {famiglia: 'Casadei'});
     }
 }
 
