@@ -1,9 +1,9 @@
-import {Text,TextInput,View, StyleSheet,Pressable,Image} from 'react-native'
+import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView} from 'react-native'
 
 
 const Login =({navigation,email,password}) => {
     return(
-        <View style={styles.areaView}>
+        <KeyboardAvoidingView behavior="padding" style={styles.areaView}> 
             <Image 
             style={styles.image}
             source={require('../images/Logo.png')}></Image>
@@ -18,13 +18,14 @@ const Login =({navigation,email,password}) => {
                 secureTextEntry={true}
                 style={styles.input}
                 placeholder='password'
+                maxLength={20}
                 onChangeText={(value) => password = value}
             />
             <Text style={styles.link} onPress={()=>{navigation.navigate('Home', {name: 'prova'})}}>Password dimenticata?</Text>
             <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,email,password)}>
                 <Text style={styles.buttonText}>Accedi</Text>
             </Pressable>
-        </View>
+        </KeyboardAvoidingView>
     );
 } 
 
