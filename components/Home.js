@@ -4,12 +4,11 @@ import {Text,FlatList,View, StyleSheet, Pressable} from 'react-native'
 const Home =() => {
     return(
         <View style={styles.container}>
+            <Text>Selezionare il menù che si vuole visualizzare</Text>
             <FlatList
                 data={[
-                {key: 'Bambino 1'},
-                {key: 'Bambino 2'},
-                {key: 'Bambino 3'},
-                {key: 'Bambino 4'},
+                {key: 'Menù invernale settimane: '},
+                {key: 'Menù estivo settimane'},
                 ]}
                 renderItem={({item}) => <><Pressable style={styles.button}><Text style={styles.buttonText}>{item.key}</Text></Pressable></>}
             />

@@ -6,13 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Home from '../components/Home';
-import ProfiloFamiglia from '../components/ProfiloFamiglia';
+import Profile from '../components/Profile';
 import Login from '../components/Login';
 
 //Screen names
 const homeName = "Home";
 const profileName = "Profilo";
-const logoutName = "Logout"
+const logoutName = "Disconnetti"
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +47,7 @@ const HomeContainer = ({navigation}) =>{
         >
 
         <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={profileName} component={ProfiloFamiglia} />
+        <Tab.Screen name={profileName} component={Profile} />
         <Tab.Screen name={logoutName} component={Login} listeners={{
               tabPress: e => {
                 e.preventDefault()

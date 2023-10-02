@@ -1,9 +1,12 @@
+import {useState} from 'react'
 import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView} from 'react-native'
 
 
-const Login =({navigation,email,password}) => {
+const Login =({navigation}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     return(
-        <KeyboardAvoidingView behavior="padding" style={styles.areaView}> 
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.areaView}> 
             <Image 
             style={styles.image}
             source={require('../images/Logo.png')}></Image>
@@ -11,7 +14,7 @@ const Login =({navigation,email,password}) => {
             <TextInput
                 style={styles.input}
                 placeholder='email'
-                onChangeText={(value) => email = value}
+                onChangeText={setEmail}
             />
             <Text style={styles.text}>Inserisci la password</Text>
             <TextInput
@@ -19,7 +22,7 @@ const Login =({navigation,email,password}) => {
                 style={styles.input}
                 placeholder='password'
                 maxLength={20}
-                onChangeText={(value) => password = value}
+                onChangeText={setPassword}
             />
             <Text style={styles.link} onPress={()=>{navigation.navigate('Home', {name: 'prova'})}}>Password dimenticata?</Text>
             <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,email,password)}>
