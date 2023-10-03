@@ -37,6 +37,9 @@ const VerificaCredenziali=(navigation,email,password)=>{
     if(email == "Ciao" && password == "Pippo"){
         navigation.navigate('HomeContainer', {famiglia: 'Casadei'});
     }
+    else{
+        alert("Password o email inseriti sono scorreti");
+    }
 }
 
 const styles = StyleSheet.create({
