@@ -24,7 +24,7 @@ const Login =({navigation}) => {
                 maxLength={20}
                 onChangeText={setPassword}
             />
-            <Text style={styles.link} onPress={()=>{navigation.navigate('Home', {name: 'prova'})}}>Password dimenticata?</Text>
+            <Text style={styles.link} onPress={()=>{alert('TODO')}}>Password dimenticata?</Text>
             <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,email,password)}>
                 <Text style={styles.buttonText}>Accedi</Text>
             </Pressable>

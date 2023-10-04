@@ -1,6 +1,6 @@
 import {useState} from 'react'
 //Pagina in cui è possibile modificare le informazioni sul bambino, email e password
-import {Text,TextInput,View, StyleSheet,Platform, Pressable,TouchableOpacity} from 'react-native'
+import {Text,TextInput,View, StyleSheet,Platform, Pressable,TouchableOpacity,KeyboardAvoidingView} from 'react-native'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -59,8 +59,8 @@ const Profile =({navigation}) => {
     }
 
     return(
-        <View style={styles.areaView}>
-            <Text style={styles.text}>Nome</Text>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.areaView}>
+             <Text style={styles.text}>Nome</Text>
             <TextInput
                 style={styles.input}
                 placeholder='Mattia'
@@ -145,7 +145,7 @@ const Profile =({navigation}) => {
             <Pressable style={styles.button} onPress={() => confermaDati()}>
                 <Text style={styles.buttonText}>Conferma Dati</Text>
             </Pressable>
-        </View>
+        </KeyboardAvoidingView>
     );
 } 
 
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         height: 150,
     },
     areaView:{
-        flex:0.8,
+        flex:1,
         justifyContent:'center',
         alignItems:'center',
     },
