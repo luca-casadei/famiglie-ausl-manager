@@ -5,9 +5,9 @@ import { Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import Home from '../components/Home';
+import Home from '../../components/Home';
 import ChangePasswordContainer from '../NavigatorChangePassword/ChangePasswrodNavigator';
-import Login from '../components/Login';
+import Login from '../../components/Login';
 
 //Screen names
 const homeName = "Home";

@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // Screens
-import Profile from '../components/Profile';
-import ChangePassword from '../components/ChangePassword';
+import Profile from '../../components/Profile';
+import ChangePassword from '../../components/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
 //Componente per la gestione della TabBar
-const ChangePasswordNavigator = ({navigation}) =>{
+const ChangePasswordNavigator = () =>{
 return(
     <NavigationContainer independent={true} >
     <Stack.Navigator initialRouteName="Profile"  screenOptions={{ headerShown: false, }}>
