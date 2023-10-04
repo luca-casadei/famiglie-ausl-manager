@@ -21,11 +21,12 @@ const Profile =() => {
 
     const onChange=({type}, dataSelezionata)=>{
         if(type=="set"){
+
             setData(dataSelezionata);
 
             if(Platform.OS == "android"){
                 attivaDatePicker();
-                setDataNascita(dataSelezionata.toDateString());
+                setDataNascita(formattadata(dataSelezionata));
             }
         }else{
             attivaDatePicker();
@@ -37,20 +38,20 @@ const Profile =() => {
         attivaDatePicker();
     }
 
-    // const formattadata=(data)=>{
-    //     let anno = data.getFullYear();
-    //     let mese = data.getMonth()+1;
-    //     let giorno = data.getDay();
+    const formattadata=(data)=>{
+        let anno = data.getFullYear();
+        let mese = data.getMonth()+1;
+        let giorno = data.getDay();
         
-    //     mese = mese<10?'0'+{mese}:{mese}
-    //     giorno = giorno<10?'0'+{giorno}:{giorno}
+        mese = mese<10?'0'+mese:mese
+        giorno = giorno<10?'0'+giorno:giorno
 
-    //     return {giorno}+'/'+{mese}+'/'+{anno}
-    // }
+        return giorno+'/'+mese+'/'+anno
+    }
 
     //Metodo submit
     const confermaDati = () => {
-        alert('nome -> '+{nome}+'cognome'+{cognome}+'Data Nascita'+{dataNascita}+'email'+{email});
+        alert('nome -> '+nome+' cognome -> '+cognome+' Data Nascita -> '+dataNascita+' email -> '+email);
     }
 
     return(
@@ -80,7 +81,7 @@ const Profile =() => {
             <Text style={styles.text}Data di nascita></Text>
             {!showPicker && Platform.OS =="android" && (<Pressable onPress={attivaDatePicker}>
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputDate}
                     placeholder='Inserire data di nascita'
                     value={dataNascita}
                     onChangeText={setDataNascita}
@@ -125,14 +126,14 @@ const Profile =() => {
                 </View>
             )}
 
-            <Text style={styles.text}>Email</Text>
+            <Text style={styles.textMail}>Email</Text>
             <TextInput
                 style={styles.input}
                 placeholder='e-mail'
                 onChangeText={setEmail}
             />
             <Pressable style={styles.button} onPress={() => confermaDati()}>
-                <Text>Conferma Dati</Text>
+                <Text style={styles.buttonText}>Conferma Dati</Text>
             </Pressable>
         </View>
     );
@@ -155,11 +156,28 @@ const styles = StyleSheet.create({
       margin: 10,
       borderWidth: 1,
       padding: 10,
-      borderRadius: 5,
+      borderRadius: 10,
+      color:'black'
+    },
+    inputDate:{
+      textAlign:'center',
+      height: 40,
+      width:300,
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 10,
+      color:'black',
+      marginTop:-30
+    },
+    textMail:{
+        fontWeight:'bold',
+        paddingTop:20, 
+        paddingBottom:10       
     },
     text:{
         fontWeight:'bold',
-        padding:10,
+        paddingTop:10,
+        paddingBottom:10,
     },
     buttonText: {
         fontSize: 16,
@@ -167,21 +185,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
-    },
-    link:{
-        color:'blue',
-        marginTop:20,
-        textDecorationLine:'underline',
+        fontWeight:'bold',
     },
     button: {
-        marginTop:15,
+        marginTop:30,
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
         paddingHorizontal:20,
         borderRadius: 10,
         elevation: 3,
-        backgroundColor: 'gray',
+        backgroundColor: 'green',
     },
     datePicker:{
         height:120,
