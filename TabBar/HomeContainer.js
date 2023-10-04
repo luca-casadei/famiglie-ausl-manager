@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Home from '../components/Home';
-import Profile from '../components/Profile';
+import ChangePasswordContainer from '../NavigatorChangePassword/ChangePasswrodNavigator';
 import Login from '../components/Login';
 
 //Screen names
@@ -47,7 +47,7 @@ const HomeContainer = ({navigation}) =>{
         >
 
         <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={profileName} component={Profile} />
+        <Tab.Screen name={profileName} component={ChangePasswordContainer} />
         <Tab.Screen name={logoutName} component={Login} listeners={{
               tabPress: e => {
                 e.preventDefault()

@@ -5,7 +5,7 @@ import {Text,TextInput,View, StyleSheet,Platform, Pressable,TouchableOpacity} fr
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 //Pagina in cui mostrare i bambini associati all'utente he ha effettuato l'accesso 
-const Profile =() => {
+const Profile =({navigation}) => {
     const [nome, setNome] = useState('');
     const [cognome, setCognome] = useState('');
     const [email, setEmail] = useState('');
@@ -52,6 +52,10 @@ const Profile =() => {
     //Metodo submit
     const confermaDati = () => {
         alert('nome -> '+nome+' cognome -> '+cognome+' Data Nascita -> '+dataNascita+' email -> '+email);
+    }
+
+    const modificaPassword=()=>{
+        navigation.navigate('ChangePassword');
     }
 
     return(
@@ -132,6 +136,12 @@ const Profile =() => {
                 placeholder='e-mail'
                 onChangeText={setEmail}
             />
+
+            
+            <Pressable style={styles.buttonChangePassword} onPress={() => modificaPassword()}>
+                <Text style={styles.buttonText}>Cambia password</Text>
+            </Pressable>
+
             <Pressable style={styles.button} onPress={() => confermaDati()}>
                 <Text style={styles.buttonText}>Conferma Dati</Text>
             </Pressable>
@@ -196,6 +206,16 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         elevation: 3,
         backgroundColor: 'green',
+    },
+    buttonChangePassword: {
+        marginTop:30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal:20,
+        borderRadius: 10,
+        elevation: 3,
+        backgroundColor: 'gray',
     },
     datePicker:{
         height:120,
