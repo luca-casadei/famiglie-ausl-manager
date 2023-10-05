@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView} from 'react-native'
 
+const tabBarName = "HomeContainer";
 
 const Login =({navigation}) => {
     const [codiceFiscale, setCodice] = useState('');
@@ -33,22 +34,28 @@ const Login =({navigation}) => {
 } 
 
 //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
-const VerificaCredenziali=(navigation,codiceFiscale,password)=>{
-    
-    fetch('https://www.pariodispari.com/apis/kidlogin?'+'{codiceFiscale:'+{codiceFiscale}+',password:'+{password})
-    .then(response => response.json())
-    .then(json => {
-        if(json.valido == true){
-            navigation.navigate('HomeContainer');
-        }
-        else{
-            alert("Password o email inseriti sono scorreti");
-        }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
+VerificaCredenziali = async (navigation,codiceFiscale,password)=>{
+
+    const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({codiceFiscale: codiceFiscale, password:  password})
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      console.log(response.token);
+      if(response?.token !== undefined){
+        navigation.navigate(tabBarName);
+      }
+      else{
+        alert("Email o password inserite sono errate!");
+      }
+  }
 
 const styles = StyleSheet.create({
     image: {
