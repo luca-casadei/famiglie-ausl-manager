@@ -3,18 +3,18 @@ import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView} from 'r
 
 
 const Login =({navigation}) => {
-    const [email, setEmail] = useState('');
+    const [codiceFiscale, setCodice] = useState('');
     const [password, setPassword] = useState('');
     return(
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.areaView}> 
             <Image 
             style={styles.image}
             source={require('../images/Logo.png')}></Image>
-            <Text style={styles.text}>Inserisci la e-mail</Text>
+            <Text style={styles.text}>Inserisci il codice fiscale</Text>
             <TextInput
                 style={styles.input}
-                placeholder='email'
-                onChangeText={setEmail}
+                placeholder='codice fiscale'
+                onChangeText={setCodice}
             />
             <Text style={styles.text}>Inserisci la password</Text>
             <TextInput
@@ -25,7 +25,7 @@ const Login =({navigation}) => {
                 onChangeText={setPassword}
             />
             <Text style={styles.link} onPress={()=>{alert('TODO')}}>Password dimenticata?</Text>
-            <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,email,password)}>
+            <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,codiceFiscale,password)}>
                 <Text style={styles.buttonText}>Accedi</Text>
             </Pressable>
         </KeyboardAvoidingView>
@@ -33,13 +33,21 @@ const Login =({navigation}) => {
 } 
 
 //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
-const VerificaCredenziali=(navigation,email,password)=>{
-    if(email == "Ciao" && password == "Pippo"){
-        navigation.navigate('HomeContainer', {famiglia: 'Casadei'});
-    }
-    else{
-        alert("Password o email inseriti sono scorreti");
-    }
+const VerificaCredenziali=(navigation,codiceFiscale,password)=>{
+    
+    fetch('https://www.pariodispari.com/apis/kidlogin?'+'{codiceFiscale:'+{codiceFiscale}+',password:'+{password})
+    .then(response => response.json())
+    .then(json => {
+        if(json.valido == true){
+            navigation.navigate('HomeContainer');
+        }
+        else{
+            alert("Password o email inseriti sono scorreti");
+        }
+    })
+    .catch(error => {
+      console.error(error);
+    });
 }
 
 const styles = StyleSheet.create({
