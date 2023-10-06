@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationParam } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import Home from '../../components/Home';
 import ChangePasswordContainer from '../NavigatorChangePassword/ChangePasswrodNavigator';
 import Login from '../../components/Login';
 
+
 //Screen names
 const homeName = "Home";
 const profileName = "Profilo";
@@ -17,7 +18,8 @@ const logoutName = "Disconnetti"
 const Tab = createBottomTabNavigator();
 
 //Componente per la gestione della TabBar
-const HomeContainer = ({navigation}) =>{
+const HomeContainer = ({route,navigation}) =>{
+  console.log(route.params.token);
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator

@@ -34,27 +34,52 @@ const Login =({navigation}) => {
 } 
 
 //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
-VerificaCredenziali = async (navigation,codiceFiscale,password)=>{
-
-    const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
+VerificaCredenziali = async (navigation,cod,passwd)=>{
+    console.log(cod);
+    console.log(passwd);
+    try{
+        var data = new URLSearchParams();
+        data.append('codiceFiscale', cod);
+        data.append('password', passwd);
+        const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
         method: 'POST',
         mode: 'cors',
         headers: {
           'Accept': 'application/x-www-form-urlencoded',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({codiceFiscale: codiceFiscale, password:  password})
+          body: data.toString(),
+          json:true,
       })
-      .catch(error => {
-        console.error(error);
-      });
-      console.log(response.token);
-      if(response?.token !== undefined){
-        navigation.navigate(tabBarName);
+      console.log(response.status);
+      switch(response.status){
+        case 502:{
+          alert("Errore interno, database non raggiungibile.");
+          break;
+        }
+        case 404:{
+          alert("Utente non trovato");
+          break;
+        }
+        case 400:{
+          alert("Credenziali invalide");
+          break;
+        }
+        case 200:{
+          response.json().then((parsedObject) =>{
+            navigation.navigate('HomeContainer',{token:parsedObject.token});
+          })
+          break; 
+        }
+        default:{
+          alert("Errore non gestito.");
+          break;
+        }
       }
-      else{
-        alert("Email o password inserite sono errate!");
-      }
+    }catch(err)
+    {
+        console.log(err.message);
+    }
   }
 
 const styles = StyleSheet.create({
