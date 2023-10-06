@@ -121,10 +121,10 @@ const Profile =({navigation}) => {
             {showPicker && Platform.OS === "ios" &&
             (
                 <View style={{flexDirection:"row", justifyContent:"space-around"}}>
-                    <TouchableOpacity style={[style.button,style.pickerButton]} onPress={attivaDatePicker}>
+                    <TouchableOpacity style={[styles.button,styles.pickerButton]} onPress={attivaDatePicker}>
                         <Text style={styles.buttonText}>Cancella</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[style.button,style.pickerButton]} onPress={confermaDataIOS}>
+                    <TouchableOpacity style={[styles.button,styles.pickerButton]} onPress={confermaDataIOS}>
                         <Text style={styles.buttonText}>Conferma</Text>
                     </TouchableOpacity>
                 </View>

@@ -67,7 +67,7 @@ VerificaCredenziali = async (navigation,cod,passwd)=>{
         }
         case 200:{
           response.json().then((parsedObject) =>{
-            navigation.navigate('HomeContainer',{token:parsedObject.token});
+            navigation.navigate(tabBarName,{token:parsedObject.token});
           })
           break; 
         }
