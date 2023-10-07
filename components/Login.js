@@ -6,6 +6,56 @@ const tabBarName = "HomeContainer";
 const Login =({navigation}) => {
     const [codiceFiscale, setCodice] = useState('');
     const [password, setPassword] = useState('');
+
+    //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
+VerificaCredenziali = async (navigation,cod,passwd)=>{
+  console.log(cod);
+  console.log(passwd);
+  try{
+      var data = new URLSearchParams();
+      data.append('codiceFiscale', cod);
+      data.append('password', passwd);
+      const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+        body: data.toString(),
+        json:true,
+    })
+    console.log(response.status);
+    switch(response.status){
+      case 502:{
+        alert("Errore interno, database non raggiungibile.");
+        break;
+      }
+      case 404:{
+        alert("Utente non trovato");
+        break;
+      }
+      case 400:{
+        alert("Credenziali invalide");
+        break;
+      }
+      case 200:{
+          setCodice('');
+          setPassword('');
+          navigation.navigate(tabBarName,{codiceFiscale:cod,password:passwd});
+        break; 
+      }
+      default:{
+        alert("Errore non gestito.");
+        break;
+      }
+    }
+    }catch(err)
+    {
+        console.log(err.message);
+    }
+  }
+
     return(
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.areaView}> 
             <Image 
@@ -15,6 +65,7 @@ const Login =({navigation}) => {
             <TextInput
                 style={styles.input}
                 placeholder='codice fiscale'
+                value={codiceFiscale}
                 onChangeText={setCodice}
             />
             <Text style={styles.text}>Inserisci la password</Text>
@@ -23,6 +74,7 @@ const Login =({navigation}) => {
                 style={styles.input}
                 placeholder='password'
                 maxLength={20}
+                value={password}
                 onChangeText={setPassword}
             />
             <Text style={styles.link} onPress={()=>{alert('TODO')}}>Password dimenticata?</Text>
@@ -32,53 +84,6 @@ const Login =({navigation}) => {
         </KeyboardAvoidingView>
     );
 } 
-
-//Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
-VerificaCredenziali = async (navigation,cod,passwd)=>{
-    console.log(cod);
-    console.log(passwd);
-    try{
-        var data = new URLSearchParams();
-        data.append('codiceFiscale', cod);
-        data.append('password', passwd);
-        const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Accept': 'application/x-www-form-urlencoded',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-          body: data.toString(),
-          json:true,
-      })
-      console.log(response.status);
-      switch(response.status){
-        case 502:{
-          alert("Errore interno, database non raggiungibile.");
-          break;
-        }
-        case 404:{
-          alert("Utente non trovato");
-          break;
-        }
-        case 400:{
-          alert("Credenziali invalide");
-          break;
-        }
-        case 200:{
-            navigation.navigate(tabBarName,{codiceFiscale:cod,password:passwd});
-          break; 
-        }
-        default:{
-          alert("Errore non gestito.");
-          break;
-        }
-      }
-    }catch(err)
-    {
-        console.log(err.message);
-    }
-  }
 
 const styles = StyleSheet.create({
     image: {

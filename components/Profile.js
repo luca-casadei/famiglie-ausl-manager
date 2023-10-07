@@ -4,9 +4,9 @@ import {Text,TextInput,View, StyleSheet,Platform, Pressable,TouchableOpacity,Key
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+
 //Pagina in cui mostrare i bambini associati all'utente he ha effettuato l'accesso 
 const Profile =({route,navigation}) => {
-    console.log(route.params);
     const params = {
         codiceFiscale : route.params.value.codiceFiscale,
         password : route.params.value.password,
@@ -17,19 +17,25 @@ const Profile =({route,navigation}) => {
     const [email, setEmail] = useState('');
     const [dataNascita, setDataNascita] = useState('');
 
+    //Per gestire il caricamento dei dati
+    const [getEffettuata, setGet] = useState(false);
+
     const [data, setData] = useState(new Date());
     const [showPicker,setShowPicker] = useState(false);
 
     //Viene richiamato all'apertura della pagina
     useEffect(() => {
-        getBambino()
+        if(!getEffettuata){
+            getBambino();
+            setGet(true);
+        }
     });
 
     getBambino = async() => {
         try{
             var data = new URLSearchParams();
             data.append('codiceFiscale', params.codiceFiscale);
-            fetch('https://apis-pari-o-dispari.azurewebsites.net/getkid', {
+            await fetch('https://apis-pari-o-dispari.azurewebsites.net/getkid', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -43,10 +49,7 @@ const Profile =({route,navigation}) => {
                 setNome(response.Nome),
                 setCognome(response.Cognome),
                 setEmail(response.Email),
-                //setData(response.DataNascita),
-                console.log(nome),
-                console.log(cognome),
-                console.log(email)
+                setDataNascita(correggiData(response.DataNascita.substr(0,10)))
             })
         }catch(err)
         {
@@ -54,7 +57,16 @@ const Profile =({route,navigation}) => {
         }
     }
     
-    
+    const correggiData = (data) =>{
+        let anno = data.substr(0,4);
+        let mese = data.substr(5,2);
+        let giorno = data.substr(8,2);
+
+        mese = mese<10?'0'+mese:mese
+        giorno = giorno<10?'0'+giorno:giorno
+
+        return giorno+'/'+mese+'/'+anno
+    }
 
     //Metodi per DatePicker
     const attivaDatePicker=()=>{
@@ -68,7 +80,7 @@ const Profile =({route,navigation}) => {
 
             if(Platform.OS == "android"){
                 attivaDatePicker();
-                setDataNascita(formattadata(dataSelezionata));
+                setDataNascita(formattaData(dataSelezionata));
             }
         }else{
             attivaDatePicker();
@@ -80,10 +92,15 @@ const Profile =({route,navigation}) => {
         attivaDatePicker();
     }
 
-    const formattadata=(data)=>{
+    const formattaData=(data)=>{
+        console.log(data);
         let anno = data.getFullYear();
-        let mese = data.getMonth()+1;
-        let giorno = data.getDay();
+        let mese = data.getMonth();
+        let giorno = data.getDay()+1;
+
+        console.log(anno);
+        console.log(mese);
+        console.log(giorno)
         
         mese = mese<10?'0'+mese:mese
         giorno = giorno<10?'0'+giorno:giorno
@@ -92,8 +109,47 @@ const Profile =({route,navigation}) => {
     }
 
     //Metodo submit
-    const confermaDati = () => {
-        alert('nome -> '+nome+' cognome -> '+cognome+' Data Nascita -> '+dataNascita+' email -> '+email);
+    const confermaDati = async() => {
+        try{
+            var data = new URLSearchParams();
+            data.append('codiceFiscale', params.codiceFiscale);
+            data.append('nome', nome);
+            data.append('cognome', cognome);
+            data.append('dataNascita', dataNascita);
+            data.append('email', email);
+            const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkid', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/x-www-form-urlencoded',
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+              body: data.toString(),
+              json:true,
+          })
+          console.log(response.status);
+          switch(response.status){
+            case 502:{
+              alert("Errore interno, database non raggiungibile.");
+              break;
+            }
+            case 404:{
+              alert("Utente non trovato");
+              break;
+            }
+            case 200:{
+                alert('Password modificata');
+              break; 
+            }
+            default:{
+              alert("Errore non gestito.");
+              break;
+            }
+          }
+        }catch(err)
+        {
+            console.log(err.message);
+        }
     }
 
     const modificaPassword=()=>{
