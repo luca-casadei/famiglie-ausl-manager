@@ -9,13 +9,14 @@ import ChangePassword from '../../components/ChangePassword';
 const Stack = createNativeStackNavigator();
 
 //Componente per la gestione della TabBar
-const ChangePasswordNavigator = () =>{
+const ChangePasswordNavigator = ({route}) =>{
 return(
     <NavigationContainer independent={true} >
     <Stack.Navigator initialRouteName="Profile"  screenOptions={{ headerShown: false, }}>
     <Stack.Screen        
         name="Profile"
-        component={Profile}>
+        component={Profile}
+        initialParams={route.params}>
         </Stack.Screen>
         <Stack.Screen
         name="ChangePassword"

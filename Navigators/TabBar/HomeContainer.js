@@ -19,7 +19,6 @@ const Tab = createBottomTabNavigator();
 
 //Componente per la gestione della TabBar
 const HomeContainer = ({route,navigation}) =>{
-  console.log(route.params.token);
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -48,8 +47,8 @@ const HomeContainer = ({route,navigation}) =>{
         })}
         >
 
-        <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={profileName} component={ChangePasswordContainer} />
+        <Tab.Screen name={homeName} component={Home} initialParams={{value:route.params}}/>
+        <Tab.Screen name={profileName} component={ChangePasswordContainer} initialParams={{value:route.params}}/>
         <Tab.Screen name={logoutName} component={Login} listeners={{
               tabPress: e => {
                 e.preventDefault()

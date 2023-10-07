@@ -1,7 +1,7 @@
 import {Text,FlatList,View, StyleSheet, Pressable} from 'react-native'
 
 //Pagina in cui mostrare i bambini associati all'utente he ha effettuato l'accesso 
-const Home =() => {
+const Home =({route}) => {
     return(
         <View style={styles.container}>
             <Text>Selezionare il menù che si vuole visualizzare</Text>

@@ -1,7 +1,13 @@
 import {useState} from 'react'
 import { View ,Text,TextInput,Pressable,StyleSheet} from "react-native"
 
-const ChangePassword = ({navigation})=>{
+const ChangePassword = ({route,navigation})=>{
+    console.log(route.params);
+    const params = {
+        codiceFiscale : route.params.codiceFiscale,
+        password : route.params.password,
+    }
+
     const [vecchiaPassword,setVecchiaPassword] = useState('');
     const [nuovaPassword,setNuovaPassword] = useState('');
     const [confermaPassword,setConfermaPassword] = useState('');
@@ -13,13 +19,14 @@ const ChangePassword = ({navigation})=>{
     const ConfermaPassword=()=>{
         //Da fare query per reperimento password, sulla vecchia password va fatta la crittografia prima del confronto
         //Torno alla pagina Profile 
-        let password = 'Pippo';
+
         
-        if(vecchiaPassword != password){
+        if(vecchiaPassword != params.password){
             alert('La password da modificare inserita è diversa da quella corrente');
         }
         else if(nuovaPassword === confermaPassword){
-            alert('Cliccare Conferma Dati per cambiare la password');
+            //Passo sia la nuova password che il codice fiscale per fare la set sul bambino
+            modificaPassword(nuovaPassword,params.codiceFiscale);
             navigation.navigate('Profile');
         }
         else if(nuovaPassword !== confermaPassword){
@@ -57,6 +64,46 @@ const ChangePassword = ({navigation})=>{
             </Pressable>     
         </View>
     )
+}
+
+const modificaPassword =async(password,codiceFiscale)=>{
+    try{
+        var data = new URLSearchParams();
+        data.append('codiceFiscale', codiceFiscale);
+        data.append('password', password);
+        const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkidpassword', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+          body: data.toString(),
+          json:true,
+      })
+      console.log(response.status);
+      switch(response.status){
+        case 502:{
+          alert("Errore interno, database non raggiungibile.");
+          break;
+        }
+        case 404:{
+          alert("Utente non trovato");
+          break;
+        }
+        case 200:{
+            alert('Password modificata');
+          break; 
+        }
+        default:{
+          alert("Errore non gestito.");
+          break;
+        }
+      }
+    }catch(err)
+    {
+        console.log(err.message);
+    }
 }
 
 const styles = StyleSheet.create({
