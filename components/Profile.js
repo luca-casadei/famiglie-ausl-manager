@@ -94,17 +94,16 @@ const Profile =({route,navigation}) => {
     }
 
     const formattaData=(data)=>{
-        console.log(data);
-        let giorno = data.getDay();
         let anno = data.getFullYear();
         let mese = data.getMonth()+1;
+        let giorno = data.getDate();
         
-
+        
         console.log(anno);
         console.log(mese);
+        console.log(giorno);
         mese = mese<10?'0'+mese:mese
         giorno = giorno<10?'0'+giorno:giorno
-        console.log(giorno);
 
         return giorno+'/'+mese+'/'+anno
     }
