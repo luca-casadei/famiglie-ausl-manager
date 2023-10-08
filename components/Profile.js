@@ -70,6 +70,7 @@ const Profile =({route,navigation}) => {
 
     //Metodi per DatePicker
     const attivaDatePicker=()=>{
+        console.log('ok');
         setShowPicker(!showPicker);
     }
 
@@ -94,16 +95,16 @@ const Profile =({route,navigation}) => {
 
     const formattaData=(data)=>{
         console.log(data);
+        let giorno = data.getDay();
         let anno = data.getFullYear();
-        let mese = data.getMonth();
-        let giorno = data.getDay()+1;
+        let mese = data.getMonth()+1;
+        
 
         console.log(anno);
         console.log(mese);
-        console.log(giorno)
-        
         mese = mese<10?'0'+mese:mese
         giorno = giorno<10?'0'+giorno:giorno
+        console.log(giorno);
 
         return giorno+'/'+mese+'/'+anno
     }
@@ -184,7 +185,7 @@ const Profile =({route,navigation}) => {
             )}
 
             <Text style={styles.text}Data di nascita></Text>
-            {!showPicker && Platform.OS =="android" && (<Pressable onPress={attivaDatePicker}>
+            {!showPicker && Platform.OS =="android" && (<Pressable style={styles.pressable} onPress={attivaDatePicker}>
                 <TextInput
                     style={styles.inputDate}
                     placeholder='Inserire data di nascita'
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
         height: 150,
     },
     areaView:{
-        flex:1,
+        flex:0.9,
         justifyContent:'center',
         alignItems:'center',
     },
@@ -276,11 +277,10 @@ const styles = StyleSheet.create({
       textAlign:'center',
       height: 40,
       width:300,
-      borderWidth: 1,
-      padding: 10,
-      borderRadius: 10,
       color:'black',
-      marginTop:-30
+      borderWidth: 1,
+      borderRadius: 10,
+      paddingRight: 10,
     },
     textMail:{
         fontWeight:'bold',
@@ -326,6 +326,13 @@ const styles = StyleSheet.create({
     },
     pickerButton:{
         paddingHorizontal:20
+    },
+    pressable:{
+        textAlign:'center',
+        height: 40,
+        width:300,
+        color:'black',
+        marginTop:-30,
     }
 });
 export default Profile;
