@@ -4,8 +4,8 @@ import { View ,Text,TextInput,Pressable,StyleSheet} from "react-native"
 const ChangePassword = ({route,navigation})=>{
     console.log(route.params);
     const params = {
-        codiceFiscale : route.params.codiceFiscale,
-        password : route.params.password,
+        codiceFiscale : route.params.password.codiceFiscale,
+        password : route.params.password.password,
     }
 
     const [vecchiaPassword,setVecchiaPassword] = useState('');
@@ -19,8 +19,6 @@ const ChangePassword = ({route,navigation})=>{
     const ConfermaPassword=()=>{
         //Da fare query per reperimento password, sulla vecchia password va fatta la crittografia prima del confronto
         //Torno alla pagina Profile 
-
-        
         if(vecchiaPassword != params.password){
             alert('La password da modificare inserita è diversa da quella corrente');
         }
