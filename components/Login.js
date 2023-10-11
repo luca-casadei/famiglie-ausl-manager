@@ -7,12 +7,10 @@ const tabBarName = "HomeContainer";
 const Login =({navigation}) => {
     const [codiceFiscale, setCodice] = useState('');
     const [password, setPassword] = useState('');
-    const [showHidePassword, setShowHidePassword] = useState(true);
-    const [iconName,setIconName]=useState('eye');
+    const [showHidePassword, setShowHidePassword] = useState(false);
 
     mostraPassword = () =>{
       setShowHidePassword(!showHidePassword);
-      showHidePassword?setIconName('eye'):setIconName('eye-off');
     }
     //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
 VerificaCredenziali = async (navigation,cod,passwd)=>{
@@ -76,15 +74,22 @@ VerificaCredenziali = async (navigation,cod,passwd)=>{
                 onChangeText={setCodice}
             />
             <Text style={styles.text}>Inserisci la password</Text>
-            <View style={styles.viewPassword}>
+            <View style={styles.container}>
               <TextInput
-                  secureTextEntry={showHidePassword}
+                  secureTextEntry={!showHidePassword}
                   placeholder='password'
                   maxLength={20}
                   value={password}
+                  styles={styles.input}
                   onChangeText={setPassword}
               />
-              <Pressable onPress={() => mostraPassword()} style={styles.showHidePassword}><Ionicons name={iconName} size={25}/></Pressable>
+              <Ionicons 
+                    name={showHidePassword ? 'eye-off' : 'eye'} 
+                    size={24} 
+                    color="#aaa"
+                    style={styles.icon} 
+                    onPress={()=> mostraPassword()} 
+                /> 
             </View>
             
             <Text style={styles.link} onPress={()=>{alert('TODO')}}>Password dimenticata?</Text>
@@ -107,9 +112,10 @@ const styles = StyleSheet.create({
     },
     input: {
       textAlign:'center',
-      height: 40,
+      height: 45,
       width:300,
       margin: 10,
+      fontSize:15,
       borderWidth: 1,
       padding: 10,
       borderRadius: 5,
@@ -117,6 +123,7 @@ const styles = StyleSheet.create({
     text:{
         fontWeight:'bold',
         padding:10,
+        fontSize:15
     },
     buttonText: {
         fontSize: 16,
@@ -140,21 +147,21 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: 'green',
     },
-    viewPassword:{
+    container:{
       flexDirection:"row", 
       margin: 10,
       textAlign:'center',
-      height: 40,
+      height: 45,
       width:300,
-      margin: 10,
       borderWidth: 1,
       padding: 10,
-      borderRadius: 5,
+      borderRadius: 5, 
+      alignItems: 'center', 
+      justifyContent: 'center',
     },
-    showHidePassword:{
-      
+    icon:{
+      marginLeft: 10, 
     }
-
 });
 
 export default Login;

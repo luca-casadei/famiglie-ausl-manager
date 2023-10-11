@@ -8,7 +8,43 @@ const Home =({route,navigation}) => {
     const params = {
         codiceFiscale : route.params.value.codiceFiscale,
         password : route.params.value.password,
+        idmenu:'',
+        stagione:'',
     }
+
+    const [getEffettuata, setGet] = useState(false);
+
+    useEffect(() => {
+        if(!getEffettuata){
+            getMenuBambino();
+            setGet(true);
+        }
+    });
+
+    getMenuBambino = async() => {
+        try{
+            await fetch('https://apis-pari-o-dispari.azurewebsites.net/getidkidmenu', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    codiceFiscale:params.codiceFiscale,
+                }),
+                json:true,
+            }).then(response => response.json())
+            .then(response => {
+                params.idmenu=response.Idmenu,
+                params.stagione=response.Stagione
+            })
+        }catch(err)
+        {
+            console.log(err.message);
+        }
+    }
+
     return(
         <View style={styles.container}>
             <Text>Selezionare il menù che si vuole visualizzare</Text>
