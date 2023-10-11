@@ -66,17 +66,17 @@ const ChangePassword = ({route,navigation})=>{
 
 const modificaPassword =async(password,codiceFiscale)=>{
     try{
-        var data = new URLSearchParams();
-        data.append('codiceFiscale', codiceFiscale);
-        data.append('password', password);
         const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkidpassword', {
         method: 'POST',
         mode: 'cors',
         headers: {
-          'Accept': 'application/x-www-form-urlencoded',
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
-          body: data.toString(),
+          body: JSON.stringify({
+            codiceFiscale:codiceFiscale,
+            password:password,
+          }),
           json:true,
       })
       console.log(response.status);

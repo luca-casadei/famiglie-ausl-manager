@@ -33,16 +33,16 @@ const Profile =({route,navigation}) => {
 
     getBambino = async() => {
         try{
-            var data = new URLSearchParams();
-            data.append('codiceFiscale', params.codiceFiscale);
             await fetch('https://apis-pari-o-dispari.azurewebsites.net/getkid', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
-                'Accept': 'application/x-www-form-urlencoded',
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
                 },
-                body: data.toString(),
+                body: JSON.stringify({
+                    codiceFiscale:params.codiceFiscale,
+                }),
                 json:true,
             }).then(response => response.json())
             .then(response => {
@@ -70,7 +70,6 @@ const Profile =({route,navigation}) => {
 
     //Metodi per DatePicker
     const attivaDatePicker=()=>{
-        console.log('ok');
         setShowPicker(!showPicker);
     }
 
@@ -98,10 +97,6 @@ const Profile =({route,navigation}) => {
         let mese = data.getMonth()+1;
         let giorno = data.getDate();
         
-        
-        console.log(anno);
-        console.log(mese);
-        console.log(giorno);
         mese = mese<10?'0'+mese:mese
         giorno = giorno<10?'0'+giorno:giorno
 
@@ -111,20 +106,25 @@ const Profile =({route,navigation}) => {
     //Metodo submit
     const confermaDati = async() => {
         try{
-            var data = new URLSearchParams();
-            data.append('codiceFiscale', params.codiceFiscale);
-            data.append('nome', nome);
-            data.append('cognome', cognome);
-            data.append('dataNascita', dataNascita);
-            data.append('email', email);
+            console.log(params.codiceFiscale);
+            console.log(nome);
+            console.log(cognome);
+            console.log(dataNascita);
+            console.log(email);
             const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkid', {
             method: 'POST',
             mode: 'cors',
             headers: {
-              'Accept': 'application/x-www-form-urlencoded',
-              'Content-Type': 'application/x-www-form-urlencoded'
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
             },
-              body: data.toString(),
+              body: JSON.stringify({
+                codiceFiscale:params.codiceFiscale,
+                nome:nome,
+                cognome:cognome,
+                dataNascita:dataNascita,
+                email:email,
+              }),
               json:true,
           })
           console.log(response.status);

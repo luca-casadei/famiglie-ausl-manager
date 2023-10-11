@@ -1,28 +1,35 @@
 import {useState} from 'react'
-import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView} from 'react-native'
+import {Text,TextInput, StyleSheet,Pressable,Image,KeyboardAvoidingView, View} from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const tabBarName = "HomeContainer";
 
 const Login =({navigation}) => {
     const [codiceFiscale, setCodice] = useState('');
     const [password, setPassword] = useState('');
+    const [showHidePassword, setShowHidePassword] = useState(true);
+    const [iconName,setIconName]=useState('eye');
 
+    mostraPassword = () =>{
+      setShowHidePassword(!showHidePassword);
+      showHidePassword?setIconName('eye'):setIconName('eye-off');
+    }
     //Metodo per vefica presenza delle credenziali inserite nel db degli utenti famiglia
 VerificaCredenziali = async (navigation,cod,passwd)=>{
-  console.log(cod);
-  console.log(passwd);
+  const codiceFiscale = cod.trim();
+  const password = passwd.trim();
   try{
-      var data = new URLSearchParams();
-      data.append('codiceFiscale', cod);
-      data.append('password', passwd);
       const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
       method: 'POST',
       mode: 'cors',
       headers: {
-        'Accept': 'application/x-www-form-urlencoded',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-        body: data.toString(),
+        body: JSON.stringify({
+          codiceFiscale:cod,
+          password: password,
+        }),
         json:true,
     })
     console.log(response.status);
@@ -69,14 +76,17 @@ VerificaCredenziali = async (navigation,cod,passwd)=>{
                 onChangeText={setCodice}
             />
             <Text style={styles.text}>Inserisci la password</Text>
-            <TextInput
-                secureTextEntry={true}
-                style={styles.input}
-                placeholder='password'
-                maxLength={20}
-                value={password}
-                onChangeText={setPassword}
-            />
+            <View style={styles.viewPassword}>
+              <TextInput
+                  secureTextEntry={showHidePassword}
+                  placeholder='password'
+                  maxLength={20}
+                  value={password}
+                  onChangeText={setPassword}
+              />
+              <Pressable onPress={() => mostraPassword()} style={styles.showHidePassword}><Ionicons name={iconName} size={25}/></Pressable>
+            </View>
+            
             <Text style={styles.link} onPress={()=>{alert('TODO')}}>Password dimenticata?</Text>
             <Pressable style={styles.button} onPress={()=>VerificaCredenziali(navigation,codiceFiscale,password)}>
                 <Text style={styles.buttonText}>Accedi</Text>
@@ -128,8 +138,23 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         borderRadius: 10,
         elevation: 3,
-        backgroundColor: 'gray',
+        backgroundColor: 'green',
+    },
+    viewPassword:{
+      flexDirection:"row", 
+      margin: 10,
+      textAlign:'center',
+      height: 40,
+      width:300,
+      margin: 10,
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 5,
+    },
+    showHidePassword:{
+      
     }
+
 });
 
 export default Login;
