@@ -17,7 +17,7 @@ VerificaCredenziali = async (navigation,cod,passwd)=>{
   const codiceFiscale = cod.trim();
   const password = passwd.trim();
   try{
-      const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/kidlogin', {
+      const response = await fetch('https://casadei.ddns.net:3000/kidlogin', {
       method: 'POST',
       mode: 'cors',
       headers: {

@@ -66,7 +66,7 @@ const ChangePassword = ({route,navigation})=>{
 
 const modificaPassword =async(password,codiceFiscale)=>{
     try{
-        const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkidpassword', {
+        const response = await fetch('https://casadei.ddns.net:3000/setkidpassword', {
         method: 'POST',
         mode: 'cors',
         headers: {

@@ -23,7 +23,7 @@ const Home =({route,navigation}) => {
 
     getMenuBambino = async() => {
         try{
-            await fetch('https://apis-pari-o-dispari.azurewebsites.net/getidkidmenu', {
+            await fetch('https://casadei.ddns.net:3000/getidkidmenu', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

@@ -33,7 +33,7 @@ const Profile =({route,navigation}) => {
 
     getBambino = async() => {
         try{
-            await fetch('https://apis-pari-o-dispari.azurewebsites.net/getkid', {
+            await fetch('https://casadei.ddns.net:3000/getkid', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -111,7 +111,7 @@ const Profile =({route,navigation}) => {
             console.log(cognome);
             console.log(dataNascita);
             console.log(email);
-            const response = await fetch('https://apis-pari-o-dispari.azurewebsites.net/setkid', {
+            const response = await fetch('https://casadei.ddns.net:3000/setkid', {
             method: 'POST',
             mode: 'cors',
             headers: {
